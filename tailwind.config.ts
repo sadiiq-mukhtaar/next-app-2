@@ -7,6 +7,9 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      popines: "var()",
+    },
     extend: {
       colors: {
         background: "var(--background)",
@@ -14,5 +17,8 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["winter"],
+  },
 } satisfies Config;
