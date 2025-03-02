@@ -1,12 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `user` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE `user`;
-
 -- CreateTable
 CREATE TABLE `accounts` (
     `id` VARCHAR(191) NOT NULL,
@@ -21,6 +12,7 @@ CREATE TABLE `accounts` (
     `scope` VARCHAR(191) NULL,
     `id_token` TEXT NULL,
     `session_state` VARCHAR(191) NULL,
+    `refresh_token_expires_in` INTEGER NULL,
 
     UNIQUE INDEX `accounts_provider_provider_account_id_key`(`provider`, `provider_account_id`),
     PRIMARY KEY (`id`)
@@ -42,6 +34,7 @@ CREATE TABLE `users` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NULL,
     `email` VARCHAR(191) NULL,
+    `hashPasswod` VARCHAR(191) NULL,
     `email_verified` DATETIME(3) NULL,
     `image` VARCHAR(191) NULL,
 

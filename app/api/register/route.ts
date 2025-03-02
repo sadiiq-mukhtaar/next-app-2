@@ -8,14 +8,18 @@ interface Body {
 }
 
 export const POST = async (req: NextRequest) => {
-  const body: Body = await req.json();
-  if (!body)
-    return NextResponse.json(
-      { message: "The body field is empty" },
-      { status: 400 }
-    );
-
   try {
+    // Parse the request body
+    const body: Body = await req.json();
+
+    // Validate the body
+    if (!body || !body.email || !body.password) {
+      return NextResponse.json(
+        { message: "Email and password are required" },
+        { status: 400 }
+      );
+    }
+
     // Check if the user already exists
     const user = await prisma.user.findUnique({
       where: { email: body.email },
@@ -41,11 +45,16 @@ export const POST = async (req: NextRequest) => {
     });
 
     return NextResponse.json(
-      { message: `${newUser.hashPasswod} created` },
+      { message: `${newUser.email} created` }, // Return the email instead of the hashed password
       { status: 201 }
     );
-  } catch (error) {
-    console.error("Error during user registration:", error);
+  } catch (error: unknown) {
+    // Log the full error object
+    console.error(
+      "Error during user registration:",
+      JSON.stringify(error, null, 2)
+    );
+
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

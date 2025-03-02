@@ -1,16 +1,11 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+datasource db {
+  provider = "postgresql" // in local cahange into mysql
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
 
 generator client {
   provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
 model Account {
@@ -26,6 +21,8 @@ model Account {
   scope              String?
   id_token           String? @db.Text
   session_state      String?
+
+  refresh_token_expires_in Int? 
  
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
